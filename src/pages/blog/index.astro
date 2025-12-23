@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+function daysAgo(date: Date): number {
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
+  return Math.floor(diff / (1000 * 60 * 60 * 24));
+}
+---
+
+<BaseLayout title="Writing - Ryan Rich">
+  <div class="grid grid-cols-[100px_1fr] gap-x-8">
+    <div class="text-[var(--color-heading)] text-[length:var(--text-size)] tracking-wide">WRITING</div>
+    <div class="text-[length:var(--text-size)] leading-loose">
+      {posts.map((post) => (
+        <a href={`/blog/${post.id}`} class="block w-fit hover:text-[var(--color-heading)] transition-colors underline uppercase">
+          {post.data.title} (POSTED: {daysAgo(post.data.date)} DAYS AGO)
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

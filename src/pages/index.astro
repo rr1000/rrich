@@ -1,0 +1,220 @@
+---
+import '../styles/global.css';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+function daysAgo(date: Date): number {
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
+  return Math.floor(diff / (1000 * 60 * 60 * 24));
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Ryan Rich</title>
+    <!-- Theme and text size initialization (before render to prevent flash) -->
+    <script is:inline>
+      (function() {
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'light' || (!storedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+          document.documentElement.classList.add('light');
+        }
+        const storedSize = localStorage.getItem('textSize') || 'text-size-sm';
+        document.documentElement.classList.add(storedSize);
+      })();
+    </script>
+  </head>
+  <body class="bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen font-sans antialiased transition-colors duration-300">
+    <div class="w-full min-h-screen px-8 py-8 md:px-12 md:py-10 flex flex-col">
+      
+      <!-- Header -->
+      <header class="mb-8 grid grid-cols-[100px_1fr_auto] gap-x-8 items-baseline">
+        <h1 class="text-[var(--color-heading)] text-[length:var(--text-size)] font-medium tracking-wide hover:text-[#EC2D2D] transition-colors cursor-pointer">RYAN RICH</h1>
+        <p class="text-[length:var(--text-size)]">ENGINEER, DESIGNER, FOUNDER</p>
+        <!-- Text size control -->
+        <div class="relative flex items-center gap-3">
+          <button 
+            id="text-size-toggle" 
+            class="text-[var(--color-text)] hover:text-[var(--color-heading)] transition-colors cursor-pointer"
+            title="Adjust text size"
+          >
+            <!-- TextAa icon from Phosphor -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M87.24,52.59a8,8,0,0,0-14.48,0l-64,136a8,8,0,1,0,14.48,6.81L39.9,160h80.2l16.66,35.4a8,8,0,1,0,14.48-6.81ZM47.43,144,80,74.79,112.57,144ZM200,96c-12.76,0-22.73,3.47-29.63,10.32a8,8,0,0,0,11.26,11.36c3.8-3.77,10-5.68,18.37-5.68,13.23,0,24,9,24,20v3.22A42.76,42.76,0,0,0,200,128c-22.06,0-40,16.15-40,36s17.94,36,40,36a42.73,42.73,0,0,0,24-7.25,8,8,0,0,0,16-.75V132C240,112.15,222.06,96,200,96Zm0,88c-13.23,0-24-9-24-20s10.77-20,24-20,24,9,24,20S213.23,184,200,184Z"/>
+            </svg>
+          </button>
+          
+          <!-- Slider popup -->
+          <div id="text-size-slider" class="hidden absolute right-0 top-full mt-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-3 z-50">
+            <input 
+              type="range" 
+              id="size-range" 
+              min="0" 
+              max="2" 
+              value="1" 
+              class="w-40 cursor-pointer accent-[var(--color-heading)]"
+            />
+            <div class="flex justify-between text-[10px] mt-1 text-[var(--color-text)] uppercase w-40">
+              <span>Smaller</span>
+              <span>Base</span>
+              <span>Bigger</span>
+            </div>
+          </div>
+
+          <button 
+            id="theme-toggle" 
+            class="text-[var(--color-text)] hover:text-[var(--color-heading)] transition-colors cursor-pointer"
+            title="Toggle theme"
+          >
+            <!-- Sun icon (shown in dark mode, click for light) -->
+            <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256" class="block">
+              <path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/>
+            </svg>
+            <!-- Moon icon (shown in light mode, click for dark) -->
+            <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256" class="hidden">
+              <path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- About + Companies Row -->
+      <div class="grid grid-cols-[100px_1fr] md:grid-cols-[100px_1fr_120px_1fr] gap-x-8 gap-y-1 border-t border-[var(--color-border)] pt-6 pb-8 relative z-10">
+        <div class="text-[var(--color-heading)] text-[length:var(--text-size)] tracking-wide">ABOUT</div>
+        <div class="text-[length:var(--text-size)] leading-relaxed uppercase md:col-span-1">
+          Co-founder and CTO at Workstreet, helping companies scale compliance and security. Previously CTO at Haekka (Slack-based security training, acquired 2023) and Chief Product & Security Officer at Datica (secure Kubernetes platform, acquired 2019).
+        </div>
+        <div class="text-[var(--color-heading)] text-[length:var(--text-size)] tracking-wide mt-6 md:mt-0">COMPANIES</div>
+        <div class="text-[length:var(--text-size)] leading-relaxed md:col-span-1 mt-6 md:mt-0">
+          <span class="company-item block w-fit hover:text-[var(--color-heading)] transition-colors underline cursor-pointer" data-tooltip="Workstreet is an AI-first security and compliance consultancy. Since founding it in early 2024, we've scaled to 180 employees globally and served over 2,000 clients.">WORKSTREET, CO-FOUNDER AND CTO (2024-PRESENT)</span>
+          <span class="company-item block w-fit hover:text-[var(--color-heading)] transition-colors underline cursor-pointer" data-tooltip="I founded Haekka at the onset of COVID, built it over three years, and sold to a security awareness provider in 2023.">HAEKKA, CO-FOUNDER AND CTO (2020-2023)</span>
+          <span class="company-item block w-fit hover:text-[var(--color-heading)] transition-colors underline cursor-pointer" data-tooltip="Datica was a compliance-focused industry cloud built on AWS. We sold in 2019.">DATICA, CPO (2013-2020)</span>
+        </div>
+      </div>
+
+      <!-- Decorative hash background -->
+      <div class="flex-1 relative">
+        <div class="absolute bottom-0 left-0 right-0 h-[12vw] overflow-hidden pointer-events-none select-none z-0">
+          <p class="text-[18vw] font-bold text-[var(--color-hash)] whitespace-nowrap leading-none tracking-tight absolute top-0 left-0">
+            9fa1baa0ebdfe616f3e94dce32909c388dedf5049ce01f53635cc646997e7376
+          </p>
+        </div>
+      </div>
+
+      <!-- Writing Section -->
+      <div class="grid grid-cols-[100px_1fr] gap-x-8 border-t border-[var(--color-border)] pt-6">
+        <div class="text-[var(--color-heading)] text-[length:var(--text-size)] tracking-wide">WRITING</div>
+        <div class="text-[length:var(--text-size)] leading-loose">
+          {posts.map((post) => (
+            <a href={`/blog/${post.id}`} class="block w-fit hover:text-[var(--color-heading)] transition-colors underline uppercase">
+              {post.data.title} (POSTED: {daysAgo(post.data.date)} DAYS AGO)
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="grid grid-cols-[100px_1fr] gap-x-8 border-t border-[var(--color-border)] mt-6 pt-6">
+        <div class="text-[var(--color-heading)] text-[length:var(--text-size)] tracking-wide">2025</div>
+        <div class="text-[length:var(--text-size)]">RRICH.IO</div>
+      </footer>
+
+    </div>
+
+    <!-- Cursor-following tooltip -->
+    <div id="cursor-tooltip" class="fixed pointer-events-none opacity-0 transition-opacity duration-150 z-50 px-3 py-2 text-[length:var(--text-size)] max-w-[280px] rounded bg-[var(--color-heading)] text-[var(--color-bg)]">
+    </div>
+
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        const toggle = document.getElementById('theme-toggle');
+        const iconSun = document.getElementById('icon-sun');
+        const iconMoon = document.getElementById('icon-moon');
+        
+        function updateIcons() {
+          const isLight = document.documentElement.classList.contains('light');
+          if (isLight) {
+            iconSun.classList.add('hidden');
+            iconSun.classList.remove('block');
+            iconMoon.classList.add('block');
+            iconMoon.classList.remove('hidden');
+          } else {
+            iconSun.classList.add('block');
+            iconSun.classList.remove('hidden');
+            iconMoon.classList.add('hidden');
+            iconMoon.classList.remove('block');
+          }
+        }
+        
+        // Set initial icon state
+        updateIcons();
+        
+        toggle.addEventListener('click', () => {
+          const isLight = document.documentElement.classList.toggle('light');
+          localStorage.setItem('theme', isLight ? 'light' : 'dark');
+          updateIcons();
+        });
+
+        // Text size slider
+        const textSizeToggle = document.getElementById('text-size-toggle');
+        const textSizeSlider = document.getElementById('text-size-slider');
+        const sizeRange = document.getElementById('size-range');
+        const sizeClasses = ['text-size-xs', 'text-size-sm', 'text-size-base'];
+
+        // Set initial slider value based on current class
+        const currentSize = sizeClasses.find(c => document.documentElement.classList.contains(c)) || 'text-size-sm';
+        sizeRange.value = sizeClasses.indexOf(currentSize);
+
+        textSizeToggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          textSizeSlider.classList.toggle('hidden');
+        });
+
+        sizeRange.addEventListener('input', () => {
+          sizeClasses.forEach(c => document.documentElement.classList.remove(c));
+          const newClass = sizeClasses[sizeRange.value];
+          document.documentElement.classList.add(newClass);
+          localStorage.setItem('textSize', newClass);
+        });
+
+        // Close slider when clicking outside
+        document.addEventListener('click', (e) => {
+          if (!textSizeSlider.contains(e.target) && e.target !== textSizeToggle) {
+            textSizeSlider.classList.add('hidden');
+          }
+        });
+
+        // Cursor-following tooltip for companies
+        const tooltip = document.getElementById('cursor-tooltip');
+        const companyItems = document.querySelectorAll('.company-item');
+
+        companyItems.forEach(item => {
+          item.addEventListener('mouseenter', (e) => {
+            tooltip.textContent = item.dataset.tooltip;
+            tooltip.style.opacity = '1';
+          });
+
+          item.addEventListener('mousemove', (e) => {
+            tooltip.style.left = e.clientX + 12 + 'px';
+            tooltip.style.top = e.clientY + 12 + 'px';
+          });
+
+          item.addEventListener('mouseleave', () => {
+            tooltip.style.opacity = '0';
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
