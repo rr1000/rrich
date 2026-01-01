@@ -174,7 +174,7 @@ Key UI Features:
 
 These results are not as bad as I expected. But they are bad. The layouts are the most interesting thing about them. From an aesthetic standpoint, they're generic. There's a quality to each that reads as obviously AI-generated.
 
-Now that we have examples, we need to extract what that negative quality actually is. I asked ChatGPT (o3) to analyze the screenshots.
+Now that we have examples, we need to extract what that negative quality actually is. I asked ChatGPT to analyze the screenshots.
 
 The prompt:
 

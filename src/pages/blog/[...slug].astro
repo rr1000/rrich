@@ -10,12 +10,6 @@ export async function getStaticPaths() {
   }));
 }
 
-function daysAgo(date: Date): number {
-  const now = new Date();
-  const diff = now.getTime() - date.getTime();
-  return Math.floor(diff / (1000 * 60 * 60 * 24));
-}
-
 const { post } = Astro.props;
 const { Content } = await render(post);
 ---
@@ -49,7 +43,7 @@ const { Content } = await render(post);
   </div>
   <article id="article-container" class="transition-all duration-300 max-w-[85ch] mx-auto">
     <header class="mb-8">
-      <p class="text-[length:var(--text-size)] uppercase mb-2">POSTED: {daysAgo(post.data.date)} DAYS AGO</p>
+      <p class="text-[length:var(--text-size)] uppercase mb-2">POSTED: <span id="days-ago" data-date={post.data.date.toISOString()}></span> DAYS AGO</p>
       <h1 class="text-[var(--color-heading)] text-[length:var(--text-size)] font-medium tracking-wide uppercase">{post.data.title}</h1>
     </header>
     <div class="prose max-w-[85ch]
@@ -68,6 +62,15 @@ const { Content } = await render(post);
 
 <script is:inline>
   document.addEventListener('DOMContentLoaded', () => {
+    // Calculate days ago dynamically
+    const daysAgoEl = document.getElementById('days-ago');
+    if (daysAgoEl) {
+      const postDate = new Date(daysAgoEl.dataset.date);
+      const now = new Date();
+      const diff = Math.floor((now.getTime() - postDate.getTime()) / (1000 * 60 * 60 * 24));
+      daysAgoEl.textContent = diff;
+    }
+
     const button = document.getElementById('toggle-align');
     const article = document.getElementById('article-container');
     const backLink = document.getElementById('back-link');
