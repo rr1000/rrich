@@ -4,8 +4,6 @@ date: 2026-01-21
 description: "Physical reality is what mathematics looks like from the inside."
 ---
 
-#### You Are Math
-
 Physical reality is what mathematics looks like from the inside.
 
 That sentence either makes immediate sense or sounds like nonsense. By the end of this piece, it should feel like the most natural description of existence available.
