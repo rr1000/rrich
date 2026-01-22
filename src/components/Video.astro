@@ -1,0 +1,39 @@
+---
+interface Props {
+  src: string;
+  poster?: string;
+  autoplay?: boolean;
+  loop?: boolean;
+  muted?: boolean;
+  controls?: boolean;
+  width?: string;
+  aspectRatio?: string;
+  caption?: string;
+}
+
+const { 
+  src, 
+  poster,
+  autoplay = false,
+  loop = false,
+  muted = false,
+  controls = true,
+  width = '100%',
+  aspectRatio = '16/9',
+  caption
+} = Astro.props;
+---
+
+<figure class="video-container" style={`max-width: ${width}`}>
+  <video
+    src={src}
+    poster={poster}
+    autoplay={autoplay}
+    loop={loop}
+    muted={muted || autoplay}
+    controls={controls}
+    playsinline
+    style={`aspect-ratio: ${aspectRatio}`}
+  />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
