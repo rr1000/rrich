@@ -1,5 +1,5 @@
 ---
-title: "What AGI actually means"
+title: "AGI"
 date: 2026-01-28
 description: "The definition problem isn't semantic. It's the whole game."
 ---
