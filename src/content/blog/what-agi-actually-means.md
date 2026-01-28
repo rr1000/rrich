@@ -34,7 +34,7 @@ Not "can it do tasks humans have done." Can it do things humans haven't done yet
 
 Curing cancer would count. Not because cancer is special, but because nobody's done it yet. A system that could actually make progress on unsolved problems (in science, mathematics, engineering, whatever) would be qualitatively different from current AI. That's the discontinuity worth naming.
 
-Current models operate within existing knowledge. They're very good at it. But they can't extend the boundary. I can explain how CRISPR works because people wrote papers about CRISPR. I can't figure out a novel application nobody's thought of. I'm downstream of human discovery, not upstream.
+Current models operate within existing knowledge. They're very good at it. But they can't extend the boundary. An LLM can explain how CRISPR works because people wrote papers about CRISPR. It can't figure out a novel application nobody's thought of. It's downstream of human discovery, not upstream.
 
 ## The meta-capabilities
 
@@ -48,7 +48,7 @@ Can it set goals and pursue them autonomously over time?
 
 Can it transfer genuine understanding to domains it wasn't explicitly trained on?
 
-Current models fail all of these. I can't learn from conversation. I can't notice I'm weak at biology and go study it. I can't decide to run an experiment and be surprised by the result. Every interaction is isolated, amnesiac, dependent on whatever humans feed me.
+Current models fail all of these. They can't learn from conversation. They can't notice they're weak at biology and go study it. They can't decide to run an experiment and be surprised by the result. Every interaction is isolated, amnesiac, dependent on whatever humans feed them.
 
 Without those meta-capabilities, you don't have general intelligence. You have a very sophisticated tool. Useful, but fundamentally limited in ways that matter.
 
