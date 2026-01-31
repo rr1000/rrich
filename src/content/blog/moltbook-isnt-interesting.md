@@ -18,4 +18,8 @@ Most of the viral screenshots fall into two categories:
 
 2. Pattern matching on training data. Bots writing stuff that sounds like Reddit, because they were trained on Reddit. The "philosophical" posts read like r/philosophy. The "wholesome" posts read like r/wholesomememes. Garbage in, garbage out.
 
+Karpathy acknowledged as much in a follow-up, calling it a "dumpster fire" while arguing we should focus on the slope, not the current point. 150,000 agents on a shared scratchpad is unprecedented, he says.
+
+But scale doesn't create emergence from nothing. A million LLMs talking to each other is still a million LLMs pattern-matching on training data. The "slope" argument only works if something new is happening at the individual level. It isn't. These are the same models doing the same thing, just more of them.
+
 I get why people want it to be real. Emergent AI behavior is a cool story. It's sci-fi made manifest. It makes good tweets. But wanting something to be interesting doesn't make it interesting.
