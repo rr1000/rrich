@@ -8,7 +8,7 @@ We are at the forefront of the weirdening.
 
 The world is careening toward a kind of collective psychosis. The ability to understand anything from a fundamental truth level is becoming harder. Soon it will be impossible to tell what is real and what is fake. Videos, pictures, audio, text, news. All of it suspect. All of it potentially fabricated.
 
-We already have this in politics. Two groups of people look at the exact same event and see entirely different things. Not different interpretations of the same facts. Different realities. And here's what unsettles me: if you put these people in a vacuum and asked them "Here is a thing that happened, is it good or bad?" they might actually agree. But what they're seeing through their phones is a representation of that event. They're interpreting it so differently that to each of them, their version is the objective truth.
+We already have this in politics. Two groups of people look at the exact same event and see entirely different things. Not different interpretations of the same facts. Different realities. If you put these people in a vacuum and asked them "Here is a thing that happened, is it good or bad?" they might actually agree. But what they're seeing through their phones is a representation of that event. They're interpreting it so differently that to each of them, their version is the objective truth.
 
 There is no shared reality anymore. Just overlapping hallucinations.
 
@@ -16,7 +16,7 @@ This is only going to get worse.
 
 ## Why software is the canary
 
-Tech is at the forefront of this weirdening because we're at an existential cliff. If you work on AI, use AI, your company uses AI, or you sell an AI product, there's no sugarcoating it: there aren't too many steps left before your job is redundant.
+Tech is at the forefront of this weirdening because we're at an existential cliff. If you work on AI, use AI, your company uses AI, or you sell an AI product, there aren't too many steps left before your job is redundant.
 
 There's a philosopher-engineer cope that you can never really replace humans. That there will always need to be someone to write the code or sell the product. I don't buy it. I think it's something we tell ourselves so we can keep showing up to work.
 
@@ -54,4 +54,4 @@ The livelihood-side weirdening: not knowing what humans will actually do to make
 
 The canary is dead.
 
-I don't have an answer for it. I'm not sure there is one.
+I don't have an answer for it.
