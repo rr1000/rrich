@@ -28,8 +28,6 @@ Fast-forward two or three years.
 
 ## The snap
 
-It's not just that companies which historically needed a thousand people to be a billion-dollar company now need ten. It might be worse.
-
 Five to ten years out, you could have a company that is effectively autonomous. No employees. What is the output of a company other than the vision of a founder who then has to build a thing, sell a thing, and improve a thing? If you can create a loop between agents doing all of those activities, which sounded far-fetched a year ago but doesn't anymore, you can see where this goes.
 
 Is this happening in nursing? No. Dentistry? No. Electrical work? No. Those require embodiment. Physical presence. Hands.
