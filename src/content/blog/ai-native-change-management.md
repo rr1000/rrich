@@ -74,15 +74,15 @@ And this is not pure loss. Read honestly, it is partly an upgrade. A spec and a 
 
 This is the load-bearing section. Here is the direct mapping from the control language in your current report to the control that actually means something, with the evidence an auditor receives.
 
-PR approved by a second engineer becomes: the spec is reviewed and approved by an accountable owner before implementation. Evidence: the approved spec with version history.
+| Old control | Replacement control | Evidence an auditor receives |
+|---|---|---|
+| PR approved by a second engineer | Spec reviewed and approved by an accountable owner before implementation | Approved spec with version history |
+| Reviewer sign-off on the diff | Agent review fleet runs against defined severity gates | Review run logs, findings, gate outcomes |
+| A second set of eyes | Reviewer independence via model diversity and author-independent verification | Pipeline config showing writer/reviewer separation |
+| Change-by-change human accountability | Named human owns the auto-merge policy, reviewed on a defined cadence | Policy doc, named owner, cadence-review records |
+| Manual rollback authority | Kill switch and exception path with human escalation | Exception logs, tested rollback procedure |
 
-Reviewer sign-off on the diff becomes: an agent review fleet runs against defined severity gates. Evidence: review run logs, the findings, and the gate outcomes.
-
-Second set of eyes becomes: reviewer independence enforced through model diversity and author-independent verification. Evidence: pipeline configuration showing the writer and reviewer are separated.
-
-Change-by-change human accountability becomes: a named human owns the auto-merge policy and reviews it on a defined cadence. Evidence: the policy document, the named owner, and records of the cadence reviews.
-
-Manual rollback authority becomes: a kill switch and exception path with human escalation. Evidence: exception logs and a tested rollback procedure.
+Read in prose, in case the table gets clipped: PR approval by a second engineer becomes spec approval by an accountable owner before implementation. Reviewer sign-off on the diff becomes an agent review fleet run against defined severity gates. Second set of eyes becomes reviewer independence enforced through model diversity and author-independent verification.
 
 I call this set AI-Native Change Management, or ANCM, because it needs a name you can put in a control matrix and reuse across frameworks. None of it asks an auditor to accept less assurance. It maps onto criteria they already use: SOC 2 CC8.1, ISO 27001 Annex A 8.32, A.5.3 segregation of duties, and the CMMC configuration-management practices. The pitch to your auditor is not "trust us, the robots are fine." It is "here is more evidence than a PR approval ever gave you, and here is the criterion it satisfies." That sentence disarms the obvious objection before it is raised.
 
