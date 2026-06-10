@@ -84,7 +84,7 @@ Change-by-change human accountability becomes: a named human owns the auto-merge
 
 Manual rollback authority becomes: a kill switch and exception path with human escalation. Evidence: exception logs and a tested rollback procedure.
 
-None of this asks an auditor to accept less assurance. It maps onto criteria they already use: SOC 2 CC8.1, ISO 27001 Annex A 8.32, the CMMC configuration-management practices. The pitch to your auditor is not "trust us, the robots are fine." It is "here is more evidence than a PR approval ever gave you, and here is the criterion it satisfies." That sentence disarms the obvious objection before it is raised.
+I call this set AI-Native Change Management, or ANCM, because it needs a name you can put in a control matrix and reuse across frameworks. None of it asks an auditor to accept less assurance. It maps onto criteria they already use: SOC 2 CC8.1, ISO 27001 Annex A 8.32, A.5.3 segregation of duties, and the CMMC configuration-management practices. The pitch to your auditor is not "trust us, the robots are fine." It is "here is more evidence than a PR approval ever gave you, and here is the criterion it satisfies." That sentence disarms the obvious objection before it is raised.
 
 ## What the new model doesn't catch
 
@@ -107,5 +107,7 @@ Auditors are going to walk into agent-written, agent-reviewed codebases this yea
 If practitioners do not bring a coherent one, auditors will improvise, one client at a time. Improvised precedent is conservative, inconsistent, and frequently stupid. The likely default, absent a better option, is requiring humans to re-read agent diffs as a checkbox. That is theater with worse latency. It satisfies no one and assures nothing.
 
 So three things to do this quarter, if any of this is your problem to own. Inventory which controls in your current report silently assume a human reads the change. Draft the replacement control language before your next audit window, not during it. And brief your auditor proactively, walking in with the mapping above rather than getting cross-examined on the gap.
+
+I wrote the five controls up as a one-page set you can copy straight into a control matrix, with the framework crosswalk attached: [the ANCM control set](/ancm-control-set.md). Take it, adapt the wording to your environment, and bring it to your next audit before the audit brings something worse to you.
 
 The control did not survive because it worked. It survived because nobody had to replace it yet. Now you do. The teams that write down the new control set first are going to set the standard everyone else gets measured against, and that is a much better seat than the one where an auditor improvises your future for you.
