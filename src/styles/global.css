@@ -171,6 +171,55 @@
   color: #374151;
 }
 
+/* Table styling */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--color-border);
+  font-size: var(--text-size);
+  line-height: 1.5;
+  margin: 2rem 0;
+  table-layout: auto;
+}
+
+.prose thead {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.prose th {
+  color: var(--color-heading);
+  font-weight: 500;
+  text-align: left;
+  vertical-align: top;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+}
+
+.prose td {
+  color: var(--color-text);
+  vertical-align: top;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+}
+
+.prose tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+:root.light .prose tbody tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Let wide tables scroll on small screens instead of overflowing */
+@media (max-width: 640px) {
+  .prose table {
+    display: block;
+    overflow-x: auto;
+    table-layout: auto;
+    white-space: normal;
+  }
+}
+
 /* Video container styling */
 .video-container {
   margin: 1.5rem 0;
