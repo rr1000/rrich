@@ -91,5 +91,3 @@ You are not asking the auditor to accept less assurance. ANCM produces more evid
 a PR approval ever did, mapped to criteria already in their program.
 
 ---
-
-ANCM is maintained at r.rich. Reuse and adapt freely. Attribution appreciated.
