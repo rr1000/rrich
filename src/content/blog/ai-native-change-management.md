@@ -4,23 +4,23 @@ date: 2026-06-10
 description: "Code review survived as a compliance control long after it stopped assuring quality. Now agents write and review the code, and the control is fiction. Here's how to rebuild it."
 ---
 
-Anthropic now says more than 80% of the code merged into its production codebase is written by Claude, up from low single digits when Claude Code launched in February 2025. The reviewing is increasingly handled by other agents, and by implication the humans are reading far less of that output line by line than they once did.
+Anthropic now says Claude writes more than 80% of the code merged into its production codebase. That figure was in the low single digits when Claude Code launched in February 2025. Other agents increasingly handle the reviews, which means humans read far less of the output line by line than they once did.
 
-Meanwhile, nearly every SOC 2, ISO 27001, etc. program in existence still contains some version of the same sentence: "changes are reviewed and approved by a second qualified individual before deployment".
+Meanwhile, nearly every SOC 2 or ISO 27001 program still contains some version of the same sentence: "changes are reviewed and approved by a second qualified individual before deployment."
 
-Those two facts cannot both be load-bearing.
+The control language no longer describes the work.
 
 ## The control that broke
 
-Pull request approval has been the workhorse evidence of change management for a decade. An engineer opens a PR, a second engineer writes a comment or clicks approve, and the platform records a tidy artifact with two names on it. Auditors love it because it is legible: a timestamp, an approver, a clear before and after.
+For a decade, pull request approval has been the standard evidence for change management. One engineer opens a PR, another comments or clicks approve, and the platform records a tidy artifact with two names on it. Auditors like it because it is easy to read: there is a timestamp, an approver, and a clear before and after.
 
-The problem is that the artifact no longer points at anything real. When the code was written by an agent and reviewed by a fleet of agents, the human "approval" on the PR is either absent or ceremonial. The control still passes the audit. It just stopped meaning what everyone agreed it meant.
+Now the artifact often records a ritual instead of a review. If an agent wrote the code and a fleet of agents reviewed it, the human "approval" is either missing or ceremonial. The control may still pass an audit, but it no longer means what everyone agreed it meant.
 
-This is worse than it sounds, because it fails in two directions. Either you get theater, with engineers rubber-stamping diffs they did not read so the evidence keeps generating, or you get a finding, with an auditor discovering mid-engagement that the "second reviewer" is a person who hasn't actually reviewed in months. Theater corrodes the program from inside. Findings get improvised into bad remediation. Both are worse than redesigning the control on purpose, before someone forces you to.
+That leaves you with theater or a finding. Engineers rubber-stamp diffs they did not read so the evidence keeps appearing, or an auditor discovers midway through an engagement that the "second reviewer" has not actually reviewed anything in months. Theater corrodes the program from within. A finding usually leads to hurried, awkward remediation. It is better to redesign the control before either happens.
 
 ## What code review was ever for
 
-You cannot replace a control until you are honest about what it was doing. Peer review was never one thing. It was five, bundled into a single GitHub click:
+To replace the control, we need to be honest about what it did. Peer review bundled five jobs into one GitHub click:
 
 - Defect detection: catching bugs before they reach production.
 - Intent verification: confirming the change solves the right problem.
@@ -28,53 +28,51 @@ You cannot replace a control until you are honest about what it was doing. Peer 
 - Knowledge transfer: a second human who now understands the change.
 - Accountability: a name attached to the approval.
 
-Defect detection, the function everyone cites first, was always the weakest of the five. Humans skim large diffs. Anyone who has approved a 2,000-line PR knows they did not trace every branch, and the research on review effectiveness has said the same thing for years: past a few hundred lines, defect-finding falls off a cliff. Auditors never accepted PR approval because it reliably caught bugs. They accepted it because it was legible evidence of the other four functions, especially independence and accountability.
+Defect detection, usually the first justification people offer, was always the weakest of the five. Humans skim large diffs. Anyone who has approved a 2,000-line PR knows they did not trace every branch. Review effectiveness drops sharply once a diff reaches a few hundred lines. Auditors did not accept PR approval because it caught bugs reliably. They accepted it because the approval gave them legible evidence of the other four functions, especially independence and accountability.
 
-So the right question is not "how do we make agents review diffs like humans did." It is "where did each of these five functions go." Because all five survived. None of them lives in the diff anymore.
+The question, then, is where those five functions live now. They still matter, but the diff is no longer where we should look for them.
 
 ## Agents ate both sides of the review
 
-The current state is not subtle. Agents write the code now, along with the tests, and a fleet of other agents reviews the pull request. Specialized review tools scan for logic errors, security vulnerabilities, and regressions, gate findings by severity, and auto-merge what clears the bar.
+Agents now write code and tests, while other agents review the pull request. Specialized tools scan for logic errors, security vulnerabilities, and regressions. They sort findings by severity and automatically merge changes that clear the required gates.
 
-The reason this happened is plain economics. Automated correctness checking got cheaper and better than human diff reading, and it kept improving while human attention stayed flat. A senior engineer reading a 2,000-line agent-written diff adds almost nothing on correctness, and it burns the one resource you cannot buy more of: senior judgment. Spending it on line-by-line review of machine output is the most expensive way to catch the fewest bugs.
+The economics explain why. Automated correctness checks became cheaper and better while human attention stayed fixed. Asking a senior engineer to read a 2,000-line, agent-written diff adds little assurance and consumes a scarce resource: senior judgment. Line-by-line review of machine output is an expensive way to catch very few bugs.
 
-Review survived all of this by changing location. Verification of the work product got automated, and human attention moved up the stack, from "did the agent write this correctly" to "is the agent building the right thing, under the right rules." In Anthropic's own description, the shift is this: less time spent asking whether Claude did the work right, and more asking whether Claude is doing the right work.
+Review did not disappear. Verification of the work product became automated, and human attention moved to the decisions above the diff. Instead of asking whether the agent wrote the code correctly, people spend more time asking whether it is building the right thing under the right rules. Anthropic describes the change in similar terms: less attention on whether Claude did the work right, and more on whether Claude is doing the right work.
 
 ## The independence problem nobody is naming
 
-The obvious worry is that when the same model writes the code and reviews the code, you have one mind checking its own work, sharing its own blind spots. That worry is half right, and the half it gets wrong matters more than the half it gets right. It quietly assumes the model is deterministic, that its output is fixed by its weights no matter how you prompt it. It is not. A model told "ship this feature" and the same model told "find the flaw that gets this rolled back" are not running the same computation. Different goal, different context, different scaffolding, different sampling. They fail in different places.
+The obvious objection is that the same model writing and reviewing code amounts to one mind checking its own work. The writer and reviewer would share the same blind spots. That risk is real, but models are not deterministic. They do not produce the same kind of answer regardless of their instructions. "Ship this feature" and "find the flaw that gets this rolled back" create different work. The goal, context, scaffolding, and sampling all change, so the two runs can fail in different places.
 
-So the real variable is how correlated their failure modes are, and you decorrelate that along three axes:
+What matters is how closely the writer's and reviewer's failures are correlated. You can reduce that correlation in three ways:
 
-- Role and goal. The writer optimizes for "make it work." The reviewer optimizes for "make it break." Adversarial framing, not a polite second look.
-- Context. The reviewer does not inherit the author's context window, its rationalizations, or the half-built mental model that produced the bug. A clean slate looking at the diff and the spec catches what the author was blind to precisely because it never saw the author's reasoning.
-- Tooling. Author-independent verification: property tests, contract tests, fuzzers, static analysis, execution that the writing agent did not author and cannot edit. This is independence you can point at, because it does not depend on the reviewer being smarter.
+- Give the roles different goals. The writer tries to make the change work; the reviewer tries to break it. The second pass should be adversarial, not polite.
+- Start the reviewer with a clean context. It should not inherit the writer's rationalizations or the half-built mental model that produced the bug. Looking only at the diff and the spec helps it see mistakes the writer missed.
+- Use author-independent tooling. Property tests, contract tests, fuzzers, static analysis, and execution should sit outside the writing agent's control. The agent neither authors nor edits these checks.
 
-The worry that survives even perfect adversarial prompting is the shared-weights blind spot: a systematic misconception baked into training that the model cannot prompt its way out of, because the gap is in what it knows, not in what it is looking for. The answer to that is not another model, it is the harness. Property tests, fuzzers, static analysis, and execution are not models and cannot share a model's blind spots. A correctness misconception that both the writing seat and the reviewing seat hold still has to survive a check that no model authored. What the harness was never built to catch, novel logic and judgment calls, is where the adversarial role and the clean context earn their keep. A residual remains. It is small, and it is the honest cost of any review regime, human or machine.
+Adversarial prompting cannot solve every independence problem. The writer and reviewer may share a misconception baked into the model's training. No prompt can fill a gap in what the model knows. That is why the harness matters more than adding another review pass. Property tests, fuzzers, static analysis, and execution are not models, so they do not share the model's blind spots. A mistake both agent roles believe still has to survive checks that neither one authored.
 
-That reframes maker-checker correctly. Financial controls never required the checker to be a different species of human. They required a different job, independent visibility, and a mandate to reject. Independence there is structural, not biological. The same is true here. A single model gives you real independence when the writing seat and the reviewing seat have genuinely different goals, context, and tooling, anchored by verification the writing agent did not author and cannot edit.
+The harness cannot catch everything. Novel logic and judgment calls still depend on the adversarial role and clean context. Some risk remains, as it does in any review regime, whether human or machine.
 
-A second pass only counts if it is a genuinely different pass. Same model, same goal, same context, run twice, is one pair of eyes looking twice. Same model under an adversarial goal, a clean context, and an independent harness is the real thing, minus the small residual already named.
+This is the useful way to think about maker-checker. Financial controls never required the checker to be a different kind of person. They required a separate job, independent visibility, and the authority to reject. The independence is structural. A single model can provide it when the writer and reviewer have genuinely different goals, context, and tooling, backed by verification the writer did not author and cannot edit.
 
-Adversarial same-model review against an independent harness is most of real review. There is early evidence that decorrelating role, context, and tooling catches defects a polite second look misses, but the evidence base is young, and anyone selling you a clean number on how much each axis contributes is guessing.
+Running the same model twice with the same goal and context does not count as independent review. Change the goal, clear the context, and add an independent harness, and the second pass becomes meaningful. Early evidence suggests that separating role, context, and tooling catches defects that a polite second look misses. The evidence base is still young, though, and any precise claim about how much each factor contributes is guesswork.
 
 ## Review moves from the diff to the spec
 
-If human review left the diff, where did it go? Up the stack, onto three artifacts that used to be afterthoughts.
+Human review moves away from the diff and onto three artifacts that used to be afterthoughts:
 
-The spec. Does this describe the right work, with the constraints stated explicitly, including the security, privacy, and performance properties that no test can infer from a description?
+- The spec describes the work and states its constraints, including security, privacy, and performance requirements that a test cannot infer from a vague description.
+- The verification plan defines the gates a change must clear, the severity that blocks a merge, and the evidence retained after a successful run.
+- The automation policy sets the conditions for automatic merges and names the human who owns that decision.
 
-The verification plan. What gates must this change clear, what severity blocks a merge, what evidence gets retained when it passes?
+Under this model, the diff is no longer the artifact being approved. The human approves the intent and the verification regime that will govern the implementation. The pipeline then produces the code and checks it against those rules. Approval changes from "I read the change" to "I authored and approved the constraints this change had to satisfy."
 
-The automation policy. What is allowed to auto-merge, under what conditions, and which named human owns that decision?
-
-Spec-level change management means the thing being reviewed and approved is no longer the diff. It is the intent plus the verification regime that governs how the intent becomes code. A human approves the specification and the rules; the pipeline produces and checks the implementation against them. Approval moves from "I read the change" to "I authored and approved the constraints this change had to satisfy."
-
-And this is not pure loss. Read honestly, it is partly an upgrade. A spec and a policy can be reviewed at a depth no human ever reached skimming a diff. The evidence trail (an approved spec with version history, plus the review run that enforced it) is more complete than PR archaeology ever was. The bar moved to a place a human can actually clear, and it sits no lower for the move.
+That is not necessarily a loss. People can review a spec and policy more carefully than they can skim a large diff. An approved spec with version history, paired with the review run that enforced it, also leaves a more complete evidence trail than PR archaeology. The human still has to clear a high bar, but it is now a bar they can realistically clear.
 
 ## The new control set
 
-Here is the direct mapping, function by function, from the control language in your current report to the control that actually means something. Watch what it does to defect detection in particular: the weakest function under human review, the one a 2,000-line diff defeated, is the one the new regime flatly improves, because fleets, severity gates, and author-independent fuzzers catch far more than a skimming human ever did.
+The table below maps each function of peer review to a control that still means something. Defect detection gets the clearest improvement. Review fleets, severity gates, and author-independent fuzzers can examine work that a human would only skim.
 
 
 | Review function     | Old control (the PR click)               | Replacement control                                                                                                                  | Evidence an auditor receives                                                                               |
@@ -86,6 +84,6 @@ Here is the direct mapping, function by function, from the control language in y
 | Accountability      | Change-by-change human sign-off          | Named human owns the auto-merge policy and kill switch, reviewed on a defined cadence                                                | Policy doc, named owner, cadence-review records, exception and rollback logs                               |
 
 
-Defect detection moves from a reviewer skimming the diff to an agent fleet running against severity gates; intent verification moves from an implicit assumption to a spec approved before implementation; independence is engineered by decorrelating the reviewer's role, context, and tooling from the writer's, anchored by a harness the writing agent did not author; knowledge transfer shifts to the human who authors and approves the spec, kept current by sampled deep-dives; and accountability becomes a named owner of the auto-merge policy and kill switch, reviewed on a cadence.
+I call this set AI-Native Change Management, or ANCM, because a control needs a stable name before it can live in a matrix and work across frameworks. It does not ask an auditor to accept less assurance. It maps new evidence to criteria they already use.
 
-I call this set AI-Native Change Management, or ANCM, because it needs a name you can put in a control matrix and reuse across frameworks. None of it asks an auditor to accept less assurance. It maps onto criteria they already use. The pitch to your auditor is not "trust us, the robots are fine." It is "here is more evidence than a PR approval ever gave you, and here is the criterion it satisfies." That sentence disarms the obvious objection before it is raised.
+Walk an auditor through the evidence each control produces and the criterion each artifact satisfies. That is a stronger position than asking everyone to pretend a ceremonial click still counts as review.
